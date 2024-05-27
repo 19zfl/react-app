@@ -44,6 +44,21 @@ export default class App extends Component {
         })
         this.setState({todos:newToDos})
     }
+    // 全选框的回调
+    checkAllToDo = (flag) => {
+        const {todos} = this.state
+        const newToDos = todos.map((todo) => {
+            return {...todo, completed:flag};
+        })
+        this.setState({todos:newToDos})
+    }
+    // 清除已完成的回调
+    clearCompletedToDos = () => {
+        const unCompletedToDos = this.state.todos.filter((todo) => {
+            return !todo.completed;
+        })
+        this.setState({todos:unCompletedToDos})
+    }
     render() {
         const {todos} = this.state;
         return (
@@ -51,7 +66,7 @@ export default class App extends Component {
                 <div className="todo-wrap">
                     <Header saveToDo={this.saveToDo} />
                     <List todos={todos} updateToDo={this.updateToDo} deleteToDo={this.deleteToDo}/>
-                    <Footer/>
+                    <Footer todos={todos} checkAllToDo={this.checkAllToDo} clearCompletedToDos={this.clearCompletedToDos}/>
                 </div>
             </div>
         )
