@@ -181,6 +181,51 @@ module.exports = function (app) {
 1. 优点：可以配置多个代理，可以灵活的控制请求是否走代理。
 2. 缺点：配置繁琐，前端请求资源时必须加前缀。
 
+##### 扩展 Fetch
+
+**文档**
+> https://github.github.io/fetch/ （已失效）
+> https://segmentfault.com/a/1190000003810652
+
+**特点**
+1. fetch：原生函数，不再使用XmlHttpRequest对象提交ajax请求
+2. 老版本浏览器可能不支持
+
+##### github搜索案例总结：
+
+1. 设计状态是要考虑全面，例如带有网络请求的组件，要考虑请求失败怎么办
+
+2. ES6小知识点：解构赋值+重命名
+
+   ```
+   let obj = {a:{b:1}}
+   const {a} = obj // 传统解构赋值
+   const {a:{b}} = obj // 连续解构赋值
+   const {a:{b:value}} - obj // 连续解构赋值+重命名
+   ```
+
+3. 消息订阅与发布机制
+
+   1. 先订阅，再发布（理解：有一种隔空对话的感觉）
+   2. 适用于任意组件间通信
+   3. 要在组件的componentWillUnmout中取消订阅
+
+4. fetch发送请求（关注分离的设计思想）
+
+   ```
+   try {
+   	const response = await fetch('/api/users')
+   	const data = await response.json()
+   	console.log(data)
+   } catch(error) {
+   	console.log(error.message)
+   }
+   ```
+
+   
+
+
+
 
 
 ### React  Router
@@ -198,3 +243,22 @@ module.exports = function (app) {
 | onMouseEnter | 鼠标移入        | li、           |
 | onMouseLeave | 鼠标移出        | li、           |
 | reduce       | 太多，见MDN解释 | array          |
+
+结构赋值：
+
+![image-20240528092850145](https://gitee.com/coder_zfl/markdown-image-cloud-drive/raw/master/markdown/202405280928317.png)
+
+![image-20240528092909545](https://gitee.com/coder_zfl/markdown-image-cloud-drive/raw/master/markdown/202405280929594.png)
+
+只能拿到value，keyWordNode是undefined
+
+连续结构赋值加上重命名：
+
+```js
+let obj = {a:{b:1}}
+const {a:{b}} = obj // 没有重命名写法
+console.log(b) // 1
+const {a:{b:data}} = obj // 重命名b
+console.log(data) // 1
+```
+
