@@ -222,13 +222,55 @@ module.exports = function (app) {
    }
    ```
 
-   
-
-
-
-
-
 ### React  Router
+
+#### 相关理解：
+
+**SPA的理解：**
+
+- 单页Web应用（single page web application，SPA）
+- 整个应用只有一个完整的页面
+- 点击页面中的链接不会刷新页面，只会做页面的局部刷新
+- 数据都需要通过ajax请求获取，并在前端异步展现
+
+##### 路由的理解：
+
+1. **什么是路由：**
+   1. 一个路由就是一个映射关系（key：value）
+   2. key为路径，value可能是function或component
+2. **路由分类**
+   1. 后端路由
+      1. 理解：value是function，用来处理客户端提交的请求
+      2. 注册路由：router.get(path, function(req, res))
+      3. 工作过程：当node接收到一个请求时，根据请求路径找到匹配的路由，调用路由中的函数来处理请求，返回响应数据
+   2. 前端路由：
+      1. 浏览器路由，value是component，用于展示页面内容
+      2. 注册路由：`<Route path="/test" component={Test}>`
+      3. 工作过程：当浏览器的path变为/test时，当前路由组件就会变为Test组件
+
+#### react-router-dom
+
+理解：
+
+- React的一个插件库
+- 专门用来实现一个SPA应用
+- 基于React的项目基本都会用此库
+
+内置组件
+
+- `<BrowserRouter>`
+
+- `<HashRouter>`
+- `<Route>`
+- `<Redirect>`
+
+- `<Link>`
+- `<NavLink>`
+- `<Switch`
+
+
+
+
 
 ### React UI组件库
 
