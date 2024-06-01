@@ -277,6 +277,18 @@ module.exports = function (app) {
 
 4. `<App>`的最外侧包裹一个`<BrowserRoute>`或`<HashRouter>`
 
+#### 路由组件与一般组件
+
+1. 写法不同：
+   1. 一般组件：`<Demo/>`
+   2. 路由组件：`<Route path='/xxx' component={<Demo>}/>`
+2. 存放位置不同：
+   1. 一般组件：components
+   2. 路由组件：pages
+3. 接收到的props不同：
+   1. 一般组件：写组件标签是传递了什么，就能接收到什么
+   2. 路由组件：接收到三个固定的属性
+
 
 
 ### React UI组件库
