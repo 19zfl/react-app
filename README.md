@@ -268,7 +268,14 @@ module.exports = function (app) {
 - `<NavLink>`
 - `<Switch`
 
+#### 路由的基本使用：
 
+1. 明确好界面中的导航区，展示区
+2. 导航区的a标签改为Link标签：`<Link to='/xxx' component={Demo}></Link>`
+
+3. 展示区写Route标签进行路径的匹配：`<Route path='/xxx' component={Demo}/>`
+
+4. `<App>`的最外侧包裹一个`<BrowserRoute>`或`<HashRouter>`
 
 
 
