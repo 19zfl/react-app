@@ -34,7 +34,7 @@ src -- 源码文件夹
 	App.js --- App组件
 	App.test.js --- 用于给App做测试
 	index.css --- 样式
-	index.js --- 入口文件
+	index.jsx --- 入口文件
 	logo.svg --- logo图
 	reportWebVitals.js --- 页面性能分析文件（需要web-vitals库的支持）
 	setupTests.js --- 组件单元测试文件（需要jest-dom库的支持）
@@ -277,7 +277,7 @@ module.exports = function (app) {
 
 4. `<App>`的最外侧包裹一个`<BrowserRoute>`或`<HashRouter>`
 
-#### 路由组件与一般组件
+##### 路由组件与一般组件
 
 1. 写法不同：
    1. 一般组件：`<Demo/>`
@@ -289,23 +289,150 @@ module.exports = function (app) {
    1. 一般组件：写组件标签是传递了什么，就能接收到什么
    2. 路由组件：接收到三个固定的属性
 
+1. **history**: 
+   1. **go**: *ƒ go(n)*
+   2. **goBack**: *ƒ goBack()*
+   3. **goForward**: *ƒ goForward()
+   4. **push**: *ƒ push(path, state)*
+   5. **replace**: *ƒ replace(path, state)*
+2. **location**: 
+   1. **pathname**: "/about"
+   2. **search**: ""
+   3. **state**: undefined
+3. **match**: 
+   1. **params**: {}
+   2. **path**: "/about"
+   3. **url**: "/about"
+
+##### NavLink与封装NavLink
+
+1. NavLink可以实现路由链接的高亮，通过activeClassName指定样式名；
+2. 标签体内容是一个特殊的标签属性；
+3. 通过this.props.children可以获取标签体内容.
+
+##### Switch的使用
+
+1. 通常情况下,path和component是一一对应关系;
+2. Switch可以提高路由匹配效率(单一匹配)
+
+##### 解决多级路径刷新页面样式丢失的问题
+
+1. public/index.html中引入样式时不写 ./ 写 / (常用)
+2. public/index.html中引入样式时不写 ./ 写 %PUBLIC_URL% (常用)
+3. 使用HashRouter
+
+##### 路由的严格匹配与模糊匹配
+
+1. 默认使用的是模糊匹配（简单记：【输入的路径】必须包含要【匹配的路径】,且顺序要一致）
+1. 开启严格匹配：`<Route exact={true} path='/home' component={Home}/>` exact={true}可以缩写成exact
+1. 严格匹配不要随便开启，需要时再开，有些时候开启会导致无法继续匹配二级路由
+
+##### Redirect的作用
+
+1. 一般写在所有路由注册的最下方，当所有路由都无法匹配时，跳转到Redirect指定的路由
+2. 具体编码：
+
+```jsx
+<Switch>
+	<Route path="/home" component={Home} />
+	<Route path="/about" component={About} />
+	<Redirect to='/Home' />
+</Switch>
+```
+
+##### 嵌套路由使用
+
+1. 注册子路由时要写上父路由的path值；
+2. 路由的匹配是按照注册路由的顺序进行的。
+
+##### 路由组件传递参数
+
+1. params参数：
+
+   > 路由链接(携带参数): `<Link to='/demo/test/tom/18'>详情</Link>`
+   >
+   > 注册路由(声明接收):`<Route path="/demo/test/:name/:age" component={Test}/>`
+   >
+   > 接受参数:`this.props.match.params`
+
+2. search参数：
+
+   > 路由链接(携带参数): `<Link to='/demo/test/?name=tom&age=18'>详情</Link>`
+   >
+   > 注册路由(无需声明，正常注册即可):`<Route path="/demo/test" component={Test}/>`
+   >
+   > 接受参数:`this.props.location.search`
+   >
+   > 备注：获取到的search是urlencoded编码字符串，需要借助querystring解析
+
+3. state参数：
+
+   > 路由链接(携带参数): `<Link to={{pathname:'/demo/test', state:{name:tom, age:19}}}>详情</Link>`
+   >
+   > 注册路由(无需声明，正常注册即可):`<Route path="/demo/test" component={Test}/>`
+   >
+   > 接受参数:`this.props.location.state`
+   >
+   > 备注：刷新也会保留数据
+
+##### 编程式路由导航
+
+借助this.props.history对象上的API对操作路由跳转、前进、后退
+
+- this.props.history.go()
+- this.props.history.push()
+- this.props.history.replace()
+- this.props.history.goBack()
+- this.props.history.goForward()
+
+##### BrowserRouter与HashRouter的区别
+
+1. 底层原理不一样：
+   1. BrowserRouter使用的是H5的history API，不兼容IE9及以下版本；
+   2. HashRouter使用的是URL的哈希值。
+2. url表现形式不一样：
+   1. BrowserRouter的路径中没有#，例如：localhost:3000/demo/test
+   2. HashRouter的路径中包含#，例如：localhost:3000/#/demo/test
+3. 刷新后对路由state参数的影响：
+   1. BrowserRouter没有任何影响，因为state保存在history对象中；
+   2. HashRouter刷新后会导致路由state参数的丢失。
+4. 备注：HashRouter可以用于解决一些路径错误相关的问题
+
 
 
 ### React UI组件库
+
+##### 流行的开源React UI组件库
+
+- material-ui（国外Google）
+  - 官网：http://www.material-ui.com/#/
+  - github：https://github.com/callemall/material-ui
+- ant-design（国内蚂蚁金服）
+  - 官网：https://ant-design.antgroup.com/index-cn?from=msidevs.net
+  - github：https://github.com/ant-design/ant-design/
+
+
+
+
+
+
+
+
 
 ### Redux
 
 
 
-函数积累：
+### 函数积累：
 
-| 名称         | 含义            | 适用标签或对象 |
-| ------------ | --------------- | -------------- |
-| onMouseEnter | 鼠标移入        | li、           |
-| onMouseLeave | 鼠标移出        | li、           |
-| reduce       | 太多，见MDN解释 | array          |
+| 名称              | 含义               | 适用标签或对象 |
+| ----------------- | ------------------ | -------------- |
+| onMouseEnter      | 鼠标移入           | li、           |
+| onMouseLeave      | 鼠标移出           | li、           |
+| reduce            | 太多，见MDN解释    | array          |
+| slice(start, end) | 截取字符串或者数组 | array,string   |
 
-结构赋值：
+### 结构赋值：
 
 ![image-20240528092850145](https://gitee.com/coder_zfl/markdown-image-cloud-drive/raw/master/markdown/202405280928317.png)
 
