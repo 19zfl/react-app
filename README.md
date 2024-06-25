@@ -411,15 +411,80 @@ module.exports = function (app) {
   - 官网：https://ant-design.antgroup.com/index-cn?from=msidevs.net
   - github：https://github.com/ant-design/ant-design/
 
-
-
-
-
-
-
-
-
 ### Redux
+
+#### 理解：
+
+##### 学习文档：
+
+1. 英文文档：https//redux.js.org/
+2. 中文文档：http://www.redux.org.cn/
+3. Github：https://github.com/reactjs/redux
+
+##### Redux是什么？
+
+- redux是一个专门用于做状态管理的js库（不是React插件库）；
+- 它可以用于在React，Angular，Vue项目中，但基本与React配合使用；
+- 作用：集中式管理React应用中多个组件共享状态。
+
+##### 什么情况下需要使用Redux？
+
+- 某个组件的状态，需要让其他组件可以随时拿到（共享）；
+- 一个组件需要改变另一个组件的状态（通信）；
+- 总体原则：能不用就不用，如果不用比较吃力就考虑使用。
+
+##### Redux工作原理：
+
+![image-20240625202023365](https://gitee.com/coder_zfl/markdown-image-cloud-drive/raw/master/markdown/202406252020503.png)
+
+##### Redux的三个核心概念
+
+**action**
+
+1. 动作对象
+2. 包含两个属性
+   1. type：标识属性，值为字符串，唯一，必要属性
+   2. data：数据属性，值类型任意，可选属性
+3. 例子：{type：‘ADD_STUDENT‘，data：{name：’tom‘，age：18}}
+
+**reducer**
+
+1. 用于初始化状态，加工状态
+2. 加工时，根据旧的state和action，产生新的state的纯函数
+
+**store**
+
+1. 将state、action、reducer联系在一起的对象
+2. 如何得到此对象？
+   1. import {createStore} from 'redux'
+   2. import reducer from './reducers'
+   3. const store = createStore(reducer)
+3. 此对象的功能？
+   1. getState()：得到state
+   2. dispatch(action)：分发action，触发reducer调用，产生新的state
+   3. subscribe(listener)：注册监听，当产生了新的state时，自动调用
+
+##### Redux的核心API
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -427,8 +492,8 @@ module.exports = function (app) {
 
 | 名称              | 含义               | 适用标签或对象 |
 | ----------------- | ------------------ | -------------- |
-| onMouseEnter      | 鼠标移入           | li、           |
-| onMouseLeave      | 鼠标移出           | li、           |
+| onMouseEnter      | 鼠标移入           | 所有原生标签   |
+| onMouseLeave      | 鼠标移出           | 所有原生标签   |
 | reduce            | 太多，见MDN解释    | array          |
 | slice(start, end) | 截取字符串或者数组 | array,string   |
 
@@ -450,3 +515,6 @@ const {a:{b:data}} = obj // 重命名b
 console.log(data) // 1
 ```
 
+
+
+<font color=red>**关于jsx中书写html、css或者js的语法在react-basic中的01_介绍中。**</font>
